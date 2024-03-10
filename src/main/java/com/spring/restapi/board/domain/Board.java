@@ -1,6 +1,6 @@
 package com.spring.restapi.board.domain;
 
-import com.spring.restapi.core.entity.BaseTimeEntity;
+import com.spring.restapi.core.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Board extends BaseTimeEntity {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +30,10 @@ public class Board extends BaseTimeEntity {
     @Comment("내용")
     private String content;
 
-    @CreatedBy
-    @Column
-    @Comment("생성자")
-    private String regBy;
-
-    @LastModifiedBy
-    @Column
-    @Comment("수정자")
-    private String modBy;
-
     @Builder
-    public Board(Long id, String title, String content, String regBy, String modBy) {
+    public Board(Long id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.regBy = regBy;
-        this.modBy = modBy;
     }
 }

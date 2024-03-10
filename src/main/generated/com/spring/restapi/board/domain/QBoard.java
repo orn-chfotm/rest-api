@@ -19,18 +19,20 @@ public class QBoard extends EntityPathBase<Board> {
 
     public static final QBoard board = new QBoard("board");
 
-    public final com.spring.restapi.core.entity.QBaseTimeEntity _super = new com.spring.restapi.core.entity.QBaseTimeEntity(this);
+    public final com.spring.restapi.core.entity.QBaseEntity _super = new com.spring.restapi.core.entity.QBaseEntity(this);
 
     public final StringPath content = createString("content");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath modBy = createString("modBy");
+    //inherited
+    public final StringPath modBy = _super.modBy;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modDt = _super.modDt;
 
-    public final StringPath regBy = createString("regBy");
+    //inherited
+    public final StringPath regBy = _super.regBy;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDt = _super.regDt;

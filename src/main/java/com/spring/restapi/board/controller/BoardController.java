@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/board")
 public class BoardController {
 
-    private final BoardService boardService;
+    private final BoardService service;
 
     @GetMapping("list")
     public ResponseEntity<?> allList() {
-        return SuccessResponse.entity(boardService.getList());
+        return SuccessResponse.entity(service.getList());
     }
 
     @GetMapping("get")
     public ResponseEntity<?> getBoard(@RequestBody @Valid BoardRequest requestDto) {
-        return SuccessResponse.entity(boardService.getBoard(requestDto));
+        return SuccessResponse.entity(service.getBoard(requestDto));
     }
 
     @PostMapping("put")
     public ResponseEntity<?> putBoard(@RequestBody @Valid BoardRequest requestDto) {
-        return SuccessResponse.entity(boardService.putBoard(requestDto));
+        return SuccessResponse.entity(service.putBoard(requestDto));
     }
 
     @PostMapping("upd")
     public void updBoard(@RequestBody @Valid BoardRequest requestDto) {
-        boardService.updBoard(requestDto);
+        service.updBoard(requestDto);
     }
 
     @PostMapping("del")
     public void delBoard(@RequestBody @Valid BoardRequest requestDto) {
-        boardService.delBoard(requestDto);
+        service.delBoard(requestDto);
     }
 
 

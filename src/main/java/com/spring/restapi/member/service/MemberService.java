@@ -9,11 +9,11 @@ public interface MemberService {
 
     public List<MemberResponse> getList();
 
-    public MemberResponse getMember(MemberRequest request);
+    public MemberResponse selectMember(String id);
 
-    public MemberResponse putMember(MemberRequest request);
+    public MemberResponse insertMember(MemberRequest request);
 
-    public MemberResponse updMember(MemberRequest request);
+    public MemberResponse updateMember(MemberRequest request);
 
-    public void delMember(MemberRequest request);
+    public void deleteMember(String id);
 }

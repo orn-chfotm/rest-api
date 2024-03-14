@@ -25,25 +25,25 @@ public class MemberController {
         return SuccessResponse.entity(service.getList());
     }
 
-    @GetMapping("get")
-    public ResponseEntity<?> getMember(@RequestBody MemberRequest request) {
-        return SuccessResponse.entity(service.getMember(request));
+    @GetMapping("view/{id}")
+    public ResponseEntity<?> selectMember(@PathVariable("id") String id) {
+        return SuccessResponse.entity(service.selectMember(id));
     }
 
-    @PostMapping("put")
-    public ResponseEntity<?> putMember(@Valid @RequestBody MemberRequest request) {
-        return SuccessResponse.entity(service.putMember(request));
+    @PostMapping("insert")
+    public ResponseEntity<?> insertMember(@Valid @RequestBody MemberRequest request) {
+        return SuccessResponse.entity(service.insertMember(request));
     }
 
-    @PutMapping("upd")
-    public ResponseEntity<?> updMember(@Valid @RequestBody MemberRequest request) {
-        return SuccessResponse.entity(service.updMember(request));
+    @PutMapping("update")
+    public ResponseEntity<?> updateMember(@Valid @RequestBody MemberRequest request) {
+        return SuccessResponse.entity(service.updateMember(request));
     }
 
-    @DeleteMapping("del")
-    public ResponseEntity<?> delMember(@RequestBody MemberRequest request) {
-        if(!request.getId().isEmpty()) {
-            service.delMember(request);
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable("id") String id) {
+        if(!id.isEmpty()) {
+            service.deleteMember(id);
             return SuccessResponse.entity(null);
         }
         throw new RuntimeException();

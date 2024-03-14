@@ -30,15 +30,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse getMember(MemberRequest request) {
-        Member member = repository.findById(request.getId())
+    public MemberResponse selectMember(String id) {
+        Member member = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
         return new MemberResponse(member);
     }
 
     @Override
-    public MemberResponse putMember(MemberRequest request) {
+    public MemberResponse insertMember(MemberRequest request) {
         Member member = repository.save(Member.builder()
                         .id(request.getId())
                         .pw(request.getPw())
@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse updMember(MemberRequest request) {
+    public MemberResponse updateMember(MemberRequest request) {
         Member member = repository.findById(request.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
@@ -69,8 +69,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void delMember(MemberRequest request) {
-        repository.deleteById(request.getId());
+    public void deleteMember(String id) {
+        repository.deleteById(id);
     }
 
 }

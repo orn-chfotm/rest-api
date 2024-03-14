@@ -37,15 +37,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardResponse getBoard(BoardRequest requestDto) {
-        Board board = repository.findById(requestDto.getId())
+    public BoardResponse selectBoard(Long id) {
+        Board board = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Board not found"));
 
         return new BoardResponse(board);
     }
 
     @Override
-    public BoardResponse putBoard(BoardRequest requestDto) {
+    public BoardResponse insertBoard(BoardRequest requestDto) {
         Board board = Board.builder()
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updBoard(BoardRequest requestDto) {
+    public void updateBoard(BoardRequest requestDto) {
         Board board = repository.findById(requestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Board not found"));
 
@@ -68,8 +68,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void delBoard(BoardRequest requestDto) {
-        repository.deleteById(requestDto.getId());
+    public void deleteBoard(Long id) {
+        repository.deleteById(id);
     }
 
 }

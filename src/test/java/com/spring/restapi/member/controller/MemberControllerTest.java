@@ -49,7 +49,7 @@ class MemberControllerTest {
                 .phone(null)
                 .build();
 
-        given(memberService.putMember(memberReq)).willReturn(
+        given(memberService.insertMember(memberReq)).willReturn(
                 new MemberResponse(member)
         );
 
@@ -63,7 +63,7 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
 
-        verify(memberService).putMember(memberReq);
+        verify(memberService).insertMember(memberReq);
 
     }
 

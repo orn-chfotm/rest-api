@@ -9,11 +9,11 @@ public interface BoardService {
 
     public List<BoardResponse> getList();
 
-    public BoardResponse getBoard(BoardRequest requestDto);
+    public BoardResponse selectBoard(Long id);
 
-    public BoardResponse putBoard(BoardRequest requestDto);
+    public BoardResponse insertBoard(BoardRequest requestDto);
 
-    public void updBoard(BoardRequest requestDto);
+    public void updateBoard(BoardRequest requestDto);
 
-    public void delBoard(BoardRequest requestDto);
+    public void deleteBoard(Long id);
 }

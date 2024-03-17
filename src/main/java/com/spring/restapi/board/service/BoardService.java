@@ -9,9 +9,9 @@ public interface BoardService {
 
     public List<BoardResponse> getList();
 
-    public BoardResponse selectBoard(Long id);
+    public BoardResponse getBoard(Long id);
 
-    public BoardResponse insertBoard(BoardRequest requestDto);
+    public BoardResponse createBoard(BoardRequest requestDto);
 
     public void updateBoard(BoardRequest requestDto);
 

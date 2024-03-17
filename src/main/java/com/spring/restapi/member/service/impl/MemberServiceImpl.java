@@ -7,8 +7,8 @@ import com.spring.restapi.member.repository.MemberRepository;
 import com.spring.restapi.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse selectMember(String id) {
+    public MemberResponse getMember(Long id) {
         Member member = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
@@ -38,38 +38,35 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponse insertMember(MemberRequest request) {
+    @Transactional
+    public MemberResponse createMember(MemberRequest request) {
+
         Member member = repository.save(Member.builder()
-                        .id(request.getId())
-                        .pw(request.getPw())
+                        .email(request.getEmail())
+                        .password(request.getPassword())
                         .name(request.getName())
                         .gender(request.getGender())
-                        .email(request.getEmail())
-                        .phone(request.getPhone())
                 .build());
 
         return new MemberResponse(member);
     }
 
     @Override
-    public MemberResponse updateMember(MemberRequest request) {
-        Member member = repository.findById(request.getId())
+    @Transactional
+    public MemberResponse updateMember(Long id, MemberRequest request) {
+        Member member = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
-        member.setPw(request.getPw());
-        member.setName(request.getName());
         member.setEmail(request.getEmail());
-        member.setPhone(request.getPhone());
+        member.setPassword(request.getPassword());
+        member.setName(request.getName());
         member.setGender(request.getGender());
-        member.setModDt(LocalDateTime.now());
-
-        member = repository.save(member);
 
         return new MemberResponse(member);
     }
 
     @Override
-    public void deleteMember(String id) {
+    public void deleteMember(Long id) {
         repository.deleteById(id);
     }
 

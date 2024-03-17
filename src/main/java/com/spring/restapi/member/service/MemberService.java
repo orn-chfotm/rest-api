@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface MemberService {
 
-    public List<MemberResponse> getList();
+    List<MemberResponse> getList();
 
-    public MemberResponse selectMember(String id);
+    MemberResponse getMember(Long id);
 
-    public MemberResponse insertMember(MemberRequest request);
+    MemberResponse createMember(MemberRequest request);
 
-    public MemberResponse updateMember(MemberRequest request);
+    MemberResponse updateMember(Long id, MemberRequest request);
 
-    public void deleteMember(String id);
+    void deleteMember(Long id);
 }

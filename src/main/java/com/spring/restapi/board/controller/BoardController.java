@@ -17,27 +17,27 @@ public class BoardController {
 
     private final BoardService service;
 
-    @GetMapping(value = "list")
+    @GetMapping
     public ResponseEntity<?> allList() {
         return SuccessResponse.entity(service.getList());
     }
 
-    @GetMapping("view/{id}")
-    public ResponseEntity<?> selectBoard(@PathVariable("id") Long id ) {
-        return SuccessResponse.entity(service.selectBoard(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBoard(@PathVariable("id") Long id ) {
+        return SuccessResponse.entity(service.getBoard(id));
     }
 
-    @PostMapping("insert")
-    public ResponseEntity<?> insertBoard(@Valid @RequestBody BoardRequest requestDto) {
-        return SuccessResponse.entity(service.insertBoard(requestDto));
+    @PostMapping
+    public ResponseEntity<?> createBoard(@Valid @RequestBody BoardRequest requestDto) {
+        return SuccessResponse.entity(service.createBoard(requestDto));
     }
 
-    @PutMapping("update")
+    @PutMapping
     public void updateBoard(@Valid @RequestBody BoardRequest requestDto) {
         service.updateBoard(requestDto);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public void deleteBoard(@PathVariable("id") Long id) {
         service.deleteBoard(id);
     }

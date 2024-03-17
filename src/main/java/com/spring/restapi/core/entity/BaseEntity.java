@@ -32,7 +32,4 @@ public abstract class BaseEntity {
     @LastModifiedBy
     private String modBy;
 
-    public void setModDt(LocalDateTime modDt) {
-        this.modDt = modDt;
-    }
 }

@@ -11,15 +11,13 @@ import java.time.LocalDateTime;
 @ToString
 public class MemberResponse extends BaseRegModResponse {
 
-    private String id;
+    private Long id;
+
+    private String email;
 
     private String name;
 
     private String gender;
-
-    private String email;
-
-    private String phone;
 
     public MemberResponse(Member member) {
         super(member.getRegBy(), member.getRegDt(), member.getModBy(), member.getModDt());
@@ -27,6 +25,5 @@ public class MemberResponse extends BaseRegModResponse {
         this.name = member.getName();
         this.gender = member.getGender();
         this.email = member.getEmail();
-        this.phone = member.getPhone();
     }
 }

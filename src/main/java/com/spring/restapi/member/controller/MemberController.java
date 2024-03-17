@@ -1,6 +1,7 @@
 package com.spring.restapi.member.controller;
 
 import com.spring.restapi.core.dto.response.SuccessResponse;
+import com.spring.restapi.core.exception.EmptyIdValueException;
 import com.spring.restapi.member.dto.request.MemberRequest;
 import com.spring.restapi.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -18,35 +19,42 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/member")
 public class MemberController {
 
-    private final MemberService service;
+    private final MemberService memberService;
 
-    @GetMapping("list")
+    @GetMapping
     public ResponseEntity<?> getList() {
-        return SuccessResponse.entity(service.getList());
+        return SuccessResponse.entity(memberService.getList());
     }
 
-    @GetMapping("view/{id}")
-    public ResponseEntity<?> selectMember(@PathVariable("id") String id) {
-        return SuccessResponse.entity(service.selectMember(id));
-    }
-
-    @PostMapping("insert")
-    public ResponseEntity<?> insertMember(@Valid @RequestBody MemberRequest request) {
-        return SuccessResponse.entity(service.insertMember(request));
-    }
-
-    @PutMapping("update")
-    public ResponseEntity<?> updateMember(@Valid @RequestBody MemberRequest request) {
-        return SuccessResponse.entity(service.updateMember(request));
-    }
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteMember(@PathVariable("id") String id) {
-        if(!id.isEmpty()) {
-            service.deleteMember(id);
-            return SuccessResponse.entity(null);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getMember(@PathVariable(value = "id", required = false) Long id){
+        if(id == null){
+            throw new EmptyIdValueException("MemberController.getMember::");
         }
-        throw new RuntimeException();
+        return SuccessResponse.entity(memberService.getMember(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createMember(@Valid @RequestBody MemberRequest request) {
+        return SuccessResponse.entity(memberService.createMember(request));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMember(@PathVariable(value = "id", required = false) Long id,
+                                          @Valid @RequestBody MemberRequest request) {
+        if(id == null){
+            throw new EmptyIdValueException("MemberController.updateMember::");
+        }
+        return SuccessResponse.entity(memberService.updateMember(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable(value = "id", required = false) Long id) {
+        if(id == null){
+            throw new EmptyIdValueException("MemberController.deleteMember::");
+        }
+        memberService.deleteMember(id);
+        return SuccessResponse.entity(null);
     }
 
 }

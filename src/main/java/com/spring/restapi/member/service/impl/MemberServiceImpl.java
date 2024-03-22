@@ -1,5 +1,6 @@
 package com.spring.restapi.member.service.impl;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.restapi.core.exception.NotFoundDataException;
 import com.spring.restapi.member.doamin.Member;
 import com.spring.restapi.member.dto.request.MemberRequest;
@@ -13,15 +14,25 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.spring.restapi.member.doamin.QMember.member;
+
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
+
+    private final MemberRepository memberRepository;
+
+    private final JPAQueryFactory jpaQueryFactory;
 
     @Autowired
-    MemberRepository repository;
+    public MemberServiceImpl(MemberRepository memberRepository,
+                             JPAQueryFactory jpaQueryFactory) {
+        this.memberRepository = memberRepository;
+        this.jpaQueryFactory = jpaQueryFactory;
+    }
 
     @Override
     public List<MemberResponse> getList() {
-        List<Member> list = repository.findAll();
+        List<Member> list = memberRepository.findAll();
         List<MemberResponse> resList = new ArrayList<>();
 
         for(Member member : list) {
@@ -32,17 +43,28 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponse getMember(Long id) {
-        Member member = repository.findById(id)
+        Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new NotFoundDataException("Member not found"));
 
         return new MemberResponse(member);
     }
 
     @Override
+    public Integer getCheckEamil(String Email) {
+        return jpaQueryFactory
+                .select(member.count())
+                .from(member)
+                .where(
+                        member.email.like(Email)
+                )
+                .fetchOne().intValue();
+    }
+
+    @Override
     @Transactional
     public MemberResponse createMember(MemberRequest request) {
 
-        Member member = repository.save(Member.builder()
+        Member member = memberRepository.save(Member.builder()
                         .email(request.getEmail())
                         .password(request.getPassword())
                         .name(request.getName())
@@ -55,7 +77,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public MemberResponse updateMember(Long id, MemberRequest request) {
-        Member member = repository.findById(id)
+        Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new NotFoundDataException("Member not found"));
 
         member.setEmail(request.getEmail());
@@ -68,7 +90,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMember(Long id) {
-        repository.deleteById(id);
+        memberRepository.deleteById(id);
     }
 
 }

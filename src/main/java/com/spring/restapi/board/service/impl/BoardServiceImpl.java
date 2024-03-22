@@ -19,15 +19,19 @@ import java.util.List;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
+    private final BoardRepository boardRepository;
+
     @Autowired
-    private BoardRepository repository;
+    public BoardServiceImpl(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
+    }
+
 
     @Override
     public List<BoardResponse> getList() {
-        List<Board> list = repository.findAll();
+        List<Board> list = boardRepository.findAll();
 
         List<BoardResponse> responseDtoList = new ArrayList<>();
         for(Board board : list) {
@@ -39,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardResponse getBoard(Long id) {
-        Board board = repository.findById(id)
+        Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
         return new BoardResponse(board);
@@ -51,25 +55,25 @@ public class BoardServiceImpl implements BoardService {
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .build();
-        board = repository.save(board);
+        board = boardRepository.save(board);
 
         return new BoardResponse(board);
     }
 
     @Override
     public void updateBoard(BoardRequest requestDto) {
-        Board board = repository.findById(requestDto.getId())
+        Board board = boardRepository.findById(requestDto.getId())
                 .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
         board.setContent(requestDto.getContent());
         board.setTitle(requestDto.getTitle());
 
-        repository.save(board);
+        boardRepository.save(board);
     }
 
     @Override
     public void deleteBoard(Long id) {
-        repository.deleteById(id);
+        boardRepository.deleteById(id);
     }
 
 }

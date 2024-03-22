@@ -27,6 +27,15 @@ public class MemberController {
         return SuccessResponse.entity(memberService.getMember(id));
     }
 
+    /**
+     * Email 중복 Check
+     */
+    @PostMapping("/checkMail")
+    public ResponseEntity<?> getCheckEmail(@RequestBody MemberRequest request) {
+        System.out.println(request.getEmail());
+        return SuccessResponse.entity(memberService.getCheckEamil(request.getEmail()));
+    }
+
     @PostMapping
     public ResponseEntity<?> createMember(@Valid @RequestBody MemberRequest request) {
         return SuccessResponse.entity(memberService.createMember(request));

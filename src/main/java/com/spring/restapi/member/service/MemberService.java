@@ -11,6 +11,8 @@ public interface MemberService {
 
     MemberResponse getMember(Long id);
 
+    Integer getCheckEamil(String Email);
+
     MemberResponse createMember(MemberRequest request);
 
     MemberResponse updateMember(Long id, MemberRequest request);

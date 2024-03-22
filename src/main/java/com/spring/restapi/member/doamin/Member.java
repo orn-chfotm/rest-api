@@ -1,14 +1,12 @@
 package com.spring.restapi.member.doamin;
 
-import com.spring.restapi.core.enums.Role;
 import com.spring.restapi.core.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Comment;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Entity
 @Getter

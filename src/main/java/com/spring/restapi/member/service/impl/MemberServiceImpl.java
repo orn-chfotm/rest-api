@@ -1,5 +1,6 @@
 package com.spring.restapi.member.service.impl;
 
+import com.spring.restapi.core.exception.NotFoundDataException;
 import com.spring.restapi.member.doamin.Member;
 import com.spring.restapi.member.dto.request.MemberRequest;
 import com.spring.restapi.member.dto.response.MemberResponse;
@@ -32,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberResponse getMember(Long id) {
         Member member = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
+                .orElseThrow(() -> new NotFoundDataException("Member not found"));
 
         return new MemberResponse(member);
     }
@@ -55,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public MemberResponse updateMember(Long id, MemberRequest request) {
         Member member = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
+                .orElseThrow(() -> new NotFoundDataException("Member not found"));
 
         member.setEmail(request.getEmail());
         member.setPassword(request.getPassword());

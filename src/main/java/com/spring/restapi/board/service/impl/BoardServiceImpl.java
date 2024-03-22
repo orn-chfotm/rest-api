@@ -6,6 +6,7 @@ import com.spring.restapi.board.repository.BoardRepository;
 import com.spring.restapi.board.dto.request.BoardRequest;
 import com.spring.restapi.board.dto.response.BoardResponse;
 import com.spring.restapi.board.service.BoardService;
+import com.spring.restapi.core.exception.NotFoundDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardResponse getBoard(Long id) {
         Board board = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Board not found"));
+                .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
         return new BoardResponse(board);
     }
@@ -58,7 +59,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void updateBoard(BoardRequest requestDto) {
         Board board = repository.findById(requestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Board not found"));
+                .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
         board.setContent(requestDto.getContent());
         board.setTitle(requestDto.getTitle());

@@ -3,7 +3,6 @@ package com.spring.restapi.board.controller;
 import com.spring.restapi.core.dto.response.SuccessResponse;
 import com.spring.restapi.board.dto.request.BoardRequest;
 import com.spring.restapi.board.service.BoardService;
-import com.spring.restapi.core.exception.EmptyIdValueException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +23,7 @@ public class BoardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBoard(@PathVariable(value = "id", required = false) Long id ) {
-        if(id == null) {
-            throw new EmptyIdValueException("BoardController.getBoard::");
-        }
+    public ResponseEntity<?> getBoard(@PathVariable(value = "id") Long id ) {
         return SuccessResponse.entity(service.getBoard(id));
     }
 
@@ -43,9 +39,6 @@ public class BoardController {
 
     @DeleteMapping("/{id}")
     public void deleteBoard(@PathVariable("id") Long id) {
-        if(id == null) {
-            throw new EmptyIdValueException("BoardController.getBoard::");
-        }
         service.deleteBoard(id);
     }
 

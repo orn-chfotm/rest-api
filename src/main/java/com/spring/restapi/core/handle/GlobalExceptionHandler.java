@@ -1,19 +1,16 @@
 package com.spring.restapi.core.handle;
 
 import com.spring.restapi.core.dto.response.FailResponse;
-import com.spring.restapi.core.exception.EmptyIdValueException;
+import com.spring.restapi.core.exception.NotFoundDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,12 +21,18 @@ public class GlobalExceptionHandler {
 
     private final HttpStatus err = HttpStatus.BAD_REQUEST;
 
+    /**
+     * Root Exception
+     */
     @ExceptionHandler({Exception.class})
     protected ResponseEntity<FailResponse> handleException(Exception e) {
         log.error("handleException {}", e.getMessage());
         return new ResponseEntity<>(new FailResponse(err.value(), err.getReasonPhrase()), err);
     }
 
+    /**
+     * RunTime Root Exception
+     */
     @ExceptionHandler({RuntimeException.class})
     protected ResponseEntity<FailResponse> handleRuntimeException(RuntimeException e) {
         log.error("handleRuntimeException {}", e.getMessage());
@@ -37,13 +40,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Key id 값이 빈 값일 경우 Exception Handle
+     * Custom Exception - NotFoundDateException.class
+     * Key(id) 값에 맞는 데이터가 없을 경우
      */
-    @ExceptionHandler({EmptyIdValueException.class})
-    protected ResponseEntity<FailResponse> handleEmptyIdValueException(EmptyIdValueException e) {
-        log.error("handleEmptyIdValueException {}", e);
-        String message = e.getMessage().concat("Empty id value");
-        return new ResponseEntity<>(new FailResponse(err.value(), message), err);
+    @ExceptionHandler(NotFoundDataException.class)
+    protected ResponseEntity<FailResponse> handleNotFoundDateException(NotFoundDataException e) {
+        log.error("handleNotFoundDateException {}", e.getMessage());
+        HttpStatus notFoundStatus = HttpStatus.NOT_FOUND;
+        return new ResponseEntity<>(
+                new FailResponse(notFoundStatus.value(), "Not Found data"), notFoundStatus
+        );
     }
 
     /**

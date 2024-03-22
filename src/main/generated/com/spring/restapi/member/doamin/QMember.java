@@ -25,7 +25,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath gender = createString("gender");
 
-    public final StringPath id = createString("id");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
     public final StringPath modBy = _super.modBy;
@@ -35,9 +35,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath phone = createString("phone");
-
-    public final StringPath pw = createString("pw");
+    public final StringPath password = createString("password");
 
     //inherited
     public final StringPath regBy = _super.regBy;

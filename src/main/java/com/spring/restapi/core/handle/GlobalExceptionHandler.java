@@ -46,9 +46,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundDataException.class)
     protected ResponseEntity<FailResponse> handleNotFoundDateException(NotFoundDataException e) {
         log.error("handleNotFoundDateException {}", e.getMessage());
-        HttpStatus notFoundStatus = HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(
-                new FailResponse(notFoundStatus.value(), "Not Found data"), notFoundStatus
+                new FailResponse(e.getCode(), e.getMessage()), e.getStatus()
         );
     }
 

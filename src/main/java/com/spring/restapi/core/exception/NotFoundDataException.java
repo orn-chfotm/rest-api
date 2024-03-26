@@ -1,6 +1,5 @@
 package com.spring.restapi.core.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 public class NotFoundDataException extends RuntimeException{

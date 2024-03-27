@@ -34,7 +34,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
 jwt:
-  header: 'Authorization'
-  prefix: 'Bearer'
+
+
   exp-time: 864000000
-  secret: a2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ
+  secret: a2FyaW10b2thcmltdG9rYXJ

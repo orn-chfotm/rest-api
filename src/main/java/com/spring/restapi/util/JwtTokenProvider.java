@@ -1,7 +1,8 @@
 package com.spring.restapi.util;
 
 import io.jsonwebtoken.*;
-import jakarta.servlet.http.HttpServlet;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -14,19 +15,22 @@ import java.util.Map;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.exp-time}")
-    private int expTime;
 
-    @Value("${jwt.secret}")
-    private Key secret;
+    private final int expTime;
+
+    private final Key secretKey;
 
     private Map<String, Object> header;
 
-    public JwtTokenProvider() {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey,
+                            @Value("${jwt.exp-time}") int expTime) {
         this.header = Map.of(
             "type", "jwt",
             "alg", "HS256"
         );
+        byte[] KeyBytes = Decoders.BASE64.decode(secretKey);
+        this.secretKey = Keys.hmacShaKeyFor(KeyBytes);
+        this.expTime = expTime;
     }
 
     public Claims setClaims(String subject) {
@@ -46,7 +50,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -57,14 +61,14 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean checkTimeOut(String token) {
+    public boolean validateToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(secret)
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

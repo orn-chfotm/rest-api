@@ -1,11 +1,9 @@
 package com.spring.restapi.util;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.security.Key;
 import java.util.Date;
@@ -23,6 +21,8 @@ class JwtTokenProviderTest {
     @Test
     @DisplayName("jwt")
     void setJwt() {
+
+        Key secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         Date now = new Date();
         long newTimeInMillis = now.getTime() + expTime;
         long expMilli = now.getTime() + expTime;
@@ -36,20 +36,32 @@ class JwtTokenProviderTest {
 
         String jwt = Jwts.builder()
                 .setHeader(Map.of(
-                        "type", "jwt",
-                        "alg", "HS256"
+                        "typ", "jwt",
+                        "alg", "HS512"
                 ))
                 .setHeaderParam("type", "jwt")
                 .setIssuedAt(now)
                 .setClaims(claims)
                 .setExpiration(new Date(newTimeInMillis))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
 
-        Jwt resultClaims = Jwts.parserBuilder()
-                .setSigningKey(secret)
+        Jwt<JwsHeader, Claims> resultClaims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(jwt);
+
+        Claims resuleClaims = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(jwt)
+                .getBody();
+
+        System.out.println(jwt);
+
+        assert resuleClaims.getSubject().equals("access-token");
+        System.out.println(resuleClaims.getSubject());
+        System.out.println(resuleClaims.get("memberId"));
 
         System.out.println(resultClaims.getBody());
         System.out.println(resultClaims.getHeader());

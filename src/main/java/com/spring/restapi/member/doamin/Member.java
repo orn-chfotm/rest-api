@@ -1,6 +1,7 @@
 package com.spring.restapi.member.doamin;
 
 import com.spring.restapi.core.entity.BaseEntity;
+import com.spring.restapi.core.enums.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,12 +36,17 @@ public class Member extends BaseEntity {
     @Comment("성별")
     private String gender;
 
+    @Column
+    @Comment("권한")
+    private String role;
+
     @Builder
-    public Member(Long id, String email, String password, String name, String gender) {
+    public Member(Long id, String email, String password, String name, String gender, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.gender = gender;
+        this.role = role;
     }
 }

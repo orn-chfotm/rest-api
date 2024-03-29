@@ -33,13 +33,15 @@ public class BoardController {
     }
 
     @PutMapping
-    public void updateBoard(@Valid @RequestBody BoardRequest requestDto) {
+    public ResponseEntity<?> updateBoard(@Valid @RequestBody BoardRequest requestDto) {
         service.updateBoard(requestDto);
+        return SuccessResponse.entity(null);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBoard(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteBoard(@PathVariable("id") Long id) {
         service.deleteBoard(id);
+        return SuccessResponse.entity(null);
     }
 
 

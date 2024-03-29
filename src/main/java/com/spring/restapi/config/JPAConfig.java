@@ -1,4 +1,4 @@
-package com.spring.restapi.core.config;
+package com.spring.restapi.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

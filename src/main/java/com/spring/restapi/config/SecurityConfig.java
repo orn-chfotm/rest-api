@@ -41,14 +41,17 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .csrf().disable()
+                .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                .requestMatchers(
-                        "/member/login",
-                        "/member/register",
-                        "/member/logout"
-                ).permitAll()
-                .requestMatchers("/**/**").hasRole("USER")
+                .and()
+                .authorizeRequests()
+                    .requestMatchers(
+                            "/member/login",
+                            "/member/register",
+                            "/member/logout",
+                            "/sign/login"
+                    ).permitAll()
+                .requestMatchers("/board/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

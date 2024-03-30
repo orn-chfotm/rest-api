@@ -33,7 +33,6 @@ class JwtTokenProviderTest {
                 .setExpiration(new Date(expMilli));
         claims.put("memberId", "1");
 
-
         String jwt = Jwts.builder()
                 .setHeader(Map.of(
                         "typ", "jwt",
@@ -56,8 +55,6 @@ class JwtTokenProviderTest {
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
-
-        System.out.println(jwt);
 
         assert resuleClaims.getSubject().equals("access-token");
         System.out.println(resuleClaims.getSubject());

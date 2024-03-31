@@ -1,8 +1,9 @@
-package com.spring.restapi.login.controller;
+package com.spring.restapi.sign.controller;
 
 import com.spring.restapi.core.dto.response.SuccessResponse;
-import com.spring.restapi.login.dto.request.LoginRequest;
-import com.spring.restapi.login.service.LoginService;
+import com.spring.restapi.sign.dto.request.SignRequest;
+import com.spring.restapi.sign.service.impl.SignServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/sign")
+public class SignController {
 
-    private final LoginService loginService;
+    private final SignServiceImpl signService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-
-        return SuccessResponse.entity(null);
+    public ResponseEntity<?> login(@Valid @RequestBody SignRequest signRequest) {
+        return SuccessResponse.entity(signService.login(signRequest));
     }
 
 }

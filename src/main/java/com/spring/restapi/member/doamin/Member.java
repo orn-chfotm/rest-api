@@ -3,16 +3,14 @@ package com.spring.restapi.member.doamin;
 import com.spring.restapi.core.entity.BaseEntity;
 import com.spring.restapi.core.enums.Role;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Member extends BaseEntity {
 
     @Id

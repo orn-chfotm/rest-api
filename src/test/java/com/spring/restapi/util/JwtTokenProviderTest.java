@@ -24,8 +24,9 @@ class JwtTokenProviderTest {
 
         Key secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         Date now = new Date();
+        System.out.println(now);
         long newTimeInMillis = now.getTime() + expTime;
-        long expMilli = now.getTime() + expTime;
+        long expMilli = now.getTime() + 10000000;
 
         Claims claims = Jwts.claims()
                 .setSubject("access-token")
@@ -41,7 +42,7 @@ class JwtTokenProviderTest {
                 .setHeaderParam("type", "jwt")
                 .setIssuedAt(now)
                 .setClaims(claims)
-                .setExpiration(new Date(newTimeInMillis))
+                .setExpiration(new Date(expMilli))
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
 
@@ -57,6 +58,7 @@ class JwtTokenProviderTest {
                 .getBody();
 
         assert resuleClaims.getSubject().equals("access-token");
+        System.out.println(jwt);
         System.out.println(resuleClaims.getSubject());
         System.out.println(resuleClaims.get("memberId"));
 

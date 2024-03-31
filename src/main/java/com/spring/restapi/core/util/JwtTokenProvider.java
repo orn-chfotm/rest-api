@@ -46,10 +46,9 @@ public class JwtTokenProvider {
                             UserDetailsService userDetailsService) {
         this.header = Map.of(
             "type", "jwt",
-            "alg", "RS256"
+            "alg", "HS512"
         );
-        byte[] KeyBytes = Decoders.BASE64.decode(secretKey);
-        this.secretKey = Keys.hmacShaKeyFor(KeyBytes);
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         this.accessExpTime = accessExpTime;
         this.refreshExpTime = refreshExpTime;
         this.userDetailsService = userDetailsService;
@@ -80,7 +79,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)
-                .signWith(secretKey, SignatureAlgorithm.RS256)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -96,7 +95,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)
-                .signWith(secretKey, SignatureAlgorithm.RS256)
+                .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -112,6 +111,7 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
+
             return true;
         } catch (ExpiredJwtException e) {
             log.error("Token Expired");

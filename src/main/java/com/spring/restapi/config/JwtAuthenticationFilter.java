@@ -17,7 +17,6 @@ import org.springframework.web.filter.GenericFilterBean;
 import java.io.IOException;
 
 @Slf4j
-@Component
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -42,7 +41,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     }
 
     private String resoleveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authrization");
+        String bearerToken = request.getHeader("Authorization");
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
             return bearerToken.substring(7);
         }

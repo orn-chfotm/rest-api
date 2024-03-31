@@ -34,7 +34,6 @@ public class MemberController {
      */
     @PostMapping("/checkMail")
     public ResponseEntity<?> getCheckEmail(@RequestBody MemberRequest memberRequest) {
-        System.out.println(memberRequest.getEmail());
         return SuccessResponse.entity(memberService.getCheckEamil(memberRequest.getEmail()));
     }
 

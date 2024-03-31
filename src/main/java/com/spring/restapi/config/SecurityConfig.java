@@ -49,13 +49,16 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                    .requestMatchers(
-                            HttpMethod.POST,
-                            "/sign/login",
-                            "/sign/refreshToken",
-                            "/sign/accessToken"
+                .requestMatchers(
+                        HttpMethod.POST,
+                        "/sign/login",
+                        "/sign/refreshToken",
+                        "/sign/accessToken"
 
-                    ).permitAll()
+                ).permitAll()
+                .requestMatchers(
+                        HttpMethod.GET,
+                        "/member/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

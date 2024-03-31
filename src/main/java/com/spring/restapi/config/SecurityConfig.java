@@ -53,12 +53,17 @@ public class SecurityConfig {
                         HttpMethod.POST,
                         "/sign/login",
                         "/sign/refreshToken",
-                        "/sign/accessToken"
+                        "/sign/accessToken",
+                        "/member"
 
                 ).permitAll()
+                // ROLE TEST
                 .requestMatchers(
                         HttpMethod.GET,
                         "/member/**").hasRole("USER")
+                .requestMatchers(
+                        HttpMethod.GET,
+                        "/board/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

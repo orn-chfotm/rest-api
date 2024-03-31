@@ -39,9 +39,7 @@ public class SignServiceImpl implements SignService {
                 .where(qMember.email.eq(signRequest.getEmail()))
                 .fetchOne();
 
-        if(member == null || !(passwordEncoder.matches(
-                signRequest.getPassword(), member.getPassword()))
-        ) {
+        if(member == null || !passwordEncoder.matches(signRequest.getPassword(), member.getPassword())) {
             throw new RuntimeException("회원 정보가 일치하지 않습니다.");
         }
 

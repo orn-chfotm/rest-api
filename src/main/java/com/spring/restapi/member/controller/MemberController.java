@@ -55,9 +55,4 @@ public class MemberController {
         return SuccessResponse.entity(memberService.createMember(memberRequest));
     }
 
-    /*@PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        return SuccessResponse.entity(memberService.login(loginRequest));
-    }
-*/
 }

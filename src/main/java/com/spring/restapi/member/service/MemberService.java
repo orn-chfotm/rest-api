@@ -21,5 +21,4 @@ public interface MemberService {
 
     void deleteMember(Long id);
 
-    LoginResponse login(LoginRequest loginRequest);
 }

@@ -109,27 +109,4 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.deleteById(id);
     }
 
-    @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        QMember qmember = QMember.member;
-
-        Member member = jpaQueryFactory
-                .select(qmember)
-                .from(qmember)
-                .where(
-                        qmember.email.eq(loginRequest.getEmail()),
-                        qmember.password.eq(loginRequest.getPassword())
-                )
-                .fetchOne();
-        if(member == null) {
-            throw new NotFoundDataException("Member not found");
-        }
-
-
-        return LoginResponse.builder()
-                .accessToken(jwtTokenProvider.generateAccessToken(member))
-                .refreshToken(jwtTokenProvider.generateRefreshToken(member))
-                        .build();
-    }
-
 }

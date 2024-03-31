@@ -14,6 +14,7 @@ import com.spring.restapi.member.doamin.QMember;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -27,6 +28,8 @@ public class SignServiceImpl implements SignService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public TokenResponse login(SignRequest signRequest) {
         QMember qMember = QMember.member;
@@ -36,7 +39,9 @@ public class SignServiceImpl implements SignService {
                 .where(qMember.email.eq(signRequest.getEmail()))
                 .fetchOne();
 
-        if(member == null || !member.getPassword().equals(signRequest.getPassword())) {
+        if(member == null || !(passwordEncoder.matches(
+                signRequest.getPassword(), member.getPassword()))
+        ) {
             throw new RuntimeException("회원 정보가 일치하지 않습니다.");
         }
 

@@ -27,18 +27,14 @@ public class MemberServiceImpl implements MemberService{
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    private final JwtTokenProvider jwtTokenProvider;
-
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public MemberServiceImpl(MemberRepository memberRepository,
                              JPAQueryFactory jpaQueryFactory,
-                             JwtTokenProvider jwtTokenProvider,
                              PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.jpaQueryFactory = jpaQueryFactory;
-        this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -78,10 +74,9 @@ public class MemberServiceImpl implements MemberService{
     @Transactional
     public MemberResponse createMember(MemberRequest memberRequest) {
 
-
         Member member = memberRepository.save(Member.builder()
                         .email(memberRequest.getEmail())
-                        .password(memberRequest.getPassword())
+                        .password(passwordEncoder.encode(memberRequest.getPassword()))
                         .name(memberRequest.getName())
                         .gender(memberRequest.getGender())
                         .role(Role.MEMBER.getRole())

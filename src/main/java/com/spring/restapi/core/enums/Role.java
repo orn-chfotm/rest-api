@@ -1,8 +1,8 @@
 package com.spring.restapi.core.enums;
 
 public enum Role {
-    MEMBER("ROLE_USER"),
-    ADMIN("ROLE_ADMIN");
+    MEMBER("USER"),
+    ADMIN("ADMIN");
 
     private String role;
 

@@ -4,15 +4,18 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SignResponse {
+public class TokenResponse {
 
     private String accessToken;
 
     private String refreshToken;
 
+    private boolean useToken;
+
     @Builder
-    public SignResponse(String accessToken, String refreshToken) {
+    public TokenResponse(String accessToken, String refreshToken, boolean useToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.useToken = useToken;
     }
 }

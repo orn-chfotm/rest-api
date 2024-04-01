@@ -13,7 +13,7 @@ public interface MemberService {
 
     MemberResponse getMember(Long id);
 
-    Integer getCheckEamil(String Email);
+    Boolean getCheckEamil(String Email);
 
     MemberResponse createMember(MemberRequest memberRequest);
 

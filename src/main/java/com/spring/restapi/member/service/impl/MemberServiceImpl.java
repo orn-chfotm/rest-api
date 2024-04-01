@@ -58,16 +58,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Integer getCheckEamil(String Email) {
-        QMember qmember = QMember.member;
-
-        return jpaQueryFactory
-                .select(qmember.count())
-                .from(qmember)
-                .where(
-                        qmember.email.like(Email)
-                )
-                .fetchOne().intValue();
+    public Boolean getCheckEamil(String email) {
+        return memberRepository.existsByEmail(email)
+                .orElseThrow(() -> new NotFoundDataException("Member not found"));
     }
 
     @Override

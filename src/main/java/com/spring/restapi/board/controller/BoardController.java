@@ -3,12 +3,14 @@ package com.spring.restapi.board.controller;
 import com.spring.restapi.core.dto.response.SuccessResponse;
 import com.spring.restapi.board.dto.request.BoardRequest;
 import com.spring.restapi.board.service.BoardService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Board Controller", description = "게시판 API")
 @Slf4j
 @RestController
 @RequiredArgsConstructor

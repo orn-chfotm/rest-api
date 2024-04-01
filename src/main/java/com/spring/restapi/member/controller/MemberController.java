@@ -4,6 +4,7 @@ import com.spring.restapi.core.dto.response.SuccessResponse;
 import com.spring.restapi.member.dto.request.LoginRequest;
 import com.spring.restapi.member.dto.request.MemberRequest;
 import com.spring.restapi.member.service.MemberService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
+@Tag(name = "Member Controller", description = "회원 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/member")

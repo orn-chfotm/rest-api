@@ -5,16 +5,12 @@ import com.spring.restapi.sign.dto.request.SignRequest;
 import com.spring.restapi.sign.dto.request.TokenRequest;
 import com.spring.restapi.sign.service.impl.SignServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.headers.Header;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
 
 @Slf4j
 @Tag(name = "Sign Controller", description = "로그인 API")
@@ -27,7 +23,7 @@ public class SignController {
 
 
     @PostMapping("/login")
-    @Operation(method = "POST", summary = "로그인", description = "로그인 처리 및 Jwt 토큰 발급", security = {})
+    @Operation(method = "POST", summary = "로그인", description = "로그인 처리 및 Jwt 토큰 발급")
     public ResponseEntity<?> login(@Valid @RequestBody SignRequest signRequest) {
         return SuccessResponse.entity(signService.login(signRequest));
     }

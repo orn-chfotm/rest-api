@@ -14,14 +14,15 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI openAPI() {
 
-        String name = "JWT Token";
+        String name = "JWT";
 
         SecurityRequirement securityRequirement = new SecurityRequirement()
                 .addList(name);
 
         Components components = new Components().addSecuritySchemes(name, new SecurityScheme()
-                .name(name)
                 .type(SecurityScheme.Type.HTTP)
+                .in(SecurityScheme.In.HEADER)
+                .name("Authorization")
                 .scheme("bearer")
                 .bearerFormat(name)
         );
@@ -38,5 +39,4 @@ public class SwaggerConfig {
                 .version("1.0.0")
                 .description("Rest Api - Backend");
     }
-
 }

@@ -42,5 +42,8 @@ jwt:
 # swagger
 springdoc:
   show-login-endpoint: true
-  #api-docs:
+  swagger-ui:
+    operations-sorter: method
+    #api-docs:
     #path: /api-docs
+    path: /swagger

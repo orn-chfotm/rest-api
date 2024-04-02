@@ -32,12 +32,9 @@ public class SignServiceImpl implements SignService {
 
     @Override
     public TokenResponse login(SignRequest signRequest) {
-        QMember qMember = QMember.member;
 
-        Member member = jpaQueryFactory
-                .selectFrom(qMember)
-                .where(qMember.email.eq(signRequest.getEmail()))
-                .fetchOne();
+        Member member = memberRepository.findByEmail(signRequest.getEmail())
+                .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
         if(member == null || !passwordEncoder.matches(signRequest.getPassword(), member.getPassword())) {
             throw new RuntimeException("회원 정보가 일치하지 않습니다.");
@@ -60,11 +57,14 @@ public class SignServiceImpl implements SignService {
 
     @Override
     public TokenResponse accessToken(TokenRequest tokenRequest) {
-        return TokenResponse.builder()
-                .accessToken(tokenRequest.getAccessToken())
-                .refreshToken(tokenRequest.getRefreshToken())
-                .useToken(jwtTokenProvider.validateToken(tokenRequest.getAccessToken()))
-                .build();
+        if(jwtTokenProvider.validateToken(tokenRequest.getAccessToken())) {
+            return TokenResponse.builder()
+                    .accessToken(tokenRequest.getAccessToken())
+                    .refreshToken(tokenRequest.getRefreshToken())
+                    .useToken(jwtTokenProvider.validateToken(tokenRequest.getAccessToken()))
+                    .build();
+        }
+        throw new TokenExpiredException("Access Token Expired");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SignServiceImpl implements SignService {
                     .build();
         }
 
-        throw new TokenExpiredException("Token Expired");
+        throw new TokenExpiredException("Refresh Token Expired");
     }
 
 }

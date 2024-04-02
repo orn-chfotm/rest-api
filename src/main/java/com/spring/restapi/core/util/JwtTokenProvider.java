@@ -1,5 +1,6 @@
 package com.spring.restapi.core.util;
 
+import com.spring.restapi.core.exception.TokenExpiredException;
 import com.spring.restapi.member.doamin.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

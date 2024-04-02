@@ -52,6 +52,10 @@ public class GlobalExceptionHandler {
         );
     }
 
+    /**
+     * Jwt Token Authentication Check Exception
+     * 토큰 유효성 만료
+     */
     @ExceptionHandler(TokenExpiredException.class)
     protected ResponseEntity<FailResponse> TokenExpiredException(TokenExpiredException e) {
         log.error("TokenExpiredException {}", e.getMessage());

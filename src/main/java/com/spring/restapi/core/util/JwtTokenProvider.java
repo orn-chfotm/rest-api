@@ -112,7 +112,6 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-
             return true;
         } catch (ExpiredJwtException e) {
             log.error("Token Expired");

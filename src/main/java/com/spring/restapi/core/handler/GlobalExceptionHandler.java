@@ -3,6 +3,7 @@ package com.spring.restapi.core.handler;
 import com.spring.restapi.core.dto.response.FailResponse;
 import com.spring.restapi.core.exception.NotFoundDataException;
 import com.spring.restapi.core.exception.TokenExpiredException;
+import com.spring.restapi.core.exception.TokenNotFountException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TokenExpiredException.class)
     protected ResponseEntity<FailResponse> TokenExpiredException(TokenExpiredException e) {
         log.error("TokenExpiredException {}", e.getMessage());
+        return new ResponseEntity<>(
+                new FailResponse(e.getCode(), e.getMessage()), e.getStatus()
+        );
+    }
+
+    @ExceptionHandler(TokenNotFountException.class)
+    protected ResponseEntity<FailResponse> TokenNotFountException(TokenNotFountException e) {
+        log.error("TokenNotFountException {}", e.getMessage());
         return new ResponseEntity<>(
                 new FailResponse(e.getCode(), e.getMessage()), e.getStatus()
         );

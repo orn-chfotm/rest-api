@@ -2,15 +2,15 @@ package com.spring.restapi.core.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class TokenExpiredException extends RuntimeException{
+public class TokenNotFountException extends RuntimeException{
 
     private HttpStatus status;
 
-    public TokenExpiredException(String message) {
+    public TokenNotFountException(String message) {
         super(message);
     }
 
-    public TokenExpiredException() {
+    public TokenNotFountException() {
         this.status = HttpStatus.FORBIDDEN;
     }
 

@@ -7,3 +7,4 @@
 5. Custom Exception 만들어 보기
 6. Generic - 재네릭 사용
 7. Common 요소 분리
+8. 도메인별 패키지 구성

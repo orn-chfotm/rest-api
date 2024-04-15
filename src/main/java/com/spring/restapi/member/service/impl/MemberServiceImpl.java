@@ -2,13 +2,10 @@ package com.spring.restapi.member.service.impl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.restapi.core.enums.Role;
+import com.spring.restapi.core.exception.AlreadyRegisteredException;
 import com.spring.restapi.core.exception.NotFoundDataException;
-import com.spring.restapi.core.util.JwtTokenProvider;
 import com.spring.restapi.member.doamin.Member;
-import com.spring.restapi.member.doamin.QMember;
-import com.spring.restapi.member.dto.request.LoginRequest;
 import com.spring.restapi.member.dto.request.MemberRequest;
-import com.spring.restapi.member.dto.response.LoginResponse;
 import com.spring.restapi.member.dto.response.MemberResponse;
 import com.spring.restapi.member.repository.MemberRepository;
 import com.spring.restapi.member.service.MemberService;
@@ -66,6 +63,10 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public MemberResponse createMember(MemberRequest memberRequest) {
+
+        if(this.getCheckEamil(memberRequest.getEmail())) {
+            throw new AlreadyRegisteredException("Already Registered");
+        }
 
         Member member = memberRepository.save(Member.builder()
                         .email(memberRequest.getEmail())

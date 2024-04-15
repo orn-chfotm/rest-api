@@ -1,6 +1,7 @@
 package com.spring.restapi.core.handler;
 
 import com.spring.restapi.core.dto.response.FailResponse;
+import com.spring.restapi.core.exception.AlreadyRegisteredException;
 import com.spring.restapi.core.exception.NotFoundDataException;
 import com.spring.restapi.core.exception.TokenExpiredException;
 import com.spring.restapi.core.exception.TokenNotFountException;
@@ -65,9 +66,23 @@ public class GlobalExceptionHandler {
         );
     }
 
+    /**
+     * Token NotFoundException
+     */
     @ExceptionHandler(TokenNotFountException.class)
     protected ResponseEntity<FailResponse> TokenNotFountException(TokenNotFountException e) {
         log.error("TokenNotFountException {}", e.getMessage());
+        return new ResponseEntity<>(
+                new FailResponse(e.getCode(), e.getMessage()), e.getStatus()
+        );
+    }
+
+    /**
+     * User Register -> Already Register Exception
+     */
+    @ExceptionHandler(AlreadyRegisteredException.class)
+    protected ResponseEntity<FailResponse> AlreadyRegisteredException(AlreadyRegisteredException e) {
+        log.error("AlreadyRegisteredException {}", e.getMessage());
         return new ResponseEntity<>(
                 new FailResponse(e.getCode(), e.getMessage()), e.getStatus()
         );

@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -15,19 +16,17 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)
 public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private LocalDateTime regDt;
+    private String regDt;
 
     @CreatedBy
-    @Column(updatable = false)
     private String regBy;
 
-    @LastModifiedBy
-    private LocalDateTime modDt;
+    @LastModifiedDate
+    private String modDt;
 
     @LastModifiedBy
     private String modBy;

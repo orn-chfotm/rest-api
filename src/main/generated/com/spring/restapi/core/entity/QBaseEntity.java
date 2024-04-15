@@ -21,11 +21,11 @@ public class QBaseEntity extends EntityPathBase<BaseEntity> {
 
     public final StringPath modBy = createString("modBy");
 
-    public final DateTimePath<java.time.LocalDateTime> modDt = createDateTime("modDt", java.time.LocalDateTime.class);
+    public final StringPath modDt = createString("modDt");
 
     public final StringPath regBy = createString("regBy");
 
-    public final DateTimePath<java.time.LocalDateTime> regDt = createDateTime("regDt", java.time.LocalDateTime.class);
+    public final StringPath regDt = createString("regDt");
 
     public QBaseEntity(String variable) {
         super(BaseEntity.class, forVariable(variable));

@@ -31,7 +31,7 @@ public class QMember extends EntityPathBase<Member> {
     public final StringPath modBy = _super.modBy;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> modDt = _super.modDt;
+    public final StringPath modDt = _super.modDt;
 
     public final StringPath name = createString("name");
 
@@ -41,7 +41,7 @@ public class QMember extends EntityPathBase<Member> {
     public final StringPath regBy = _super.regBy;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> regDt = _super.regDt;
+    public final StringPath regDt = _super.regDt;
 
     public final StringPath role = createString("role");
 

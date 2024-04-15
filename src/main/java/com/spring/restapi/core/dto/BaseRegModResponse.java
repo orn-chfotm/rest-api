@@ -6,13 +6,13 @@ public abstract class BaseRegModResponse {
 
     private final String regBy;
 
-    private final LocalDateTime regDt;
+    private final String regDt;
 
     private final String modBy;
 
-    private final LocalDateTime modDt;
+    private final String modDt;
 
-    public BaseRegModResponse(String regBy, LocalDateTime regDt, String modBy, LocalDateTime modDt){
+    public BaseRegModResponse(String regBy, String regDt, String modBy, String modDt){
         this.regBy = regBy;
         this.regDt = regDt;
         this.modBy = modBy;

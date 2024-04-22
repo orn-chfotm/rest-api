@@ -1,36 +1,29 @@
 package com.spring.restapi.board.service.impl;
 
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.restapi.board.domain.Board;
-import com.spring.restapi.board.repository.BoardRepository;
 import com.spring.restapi.board.dto.request.BoardRequest;
 import com.spring.restapi.board.dto.response.BoardResponse;
+import com.spring.restapi.board.repository.BoardRepository;
 import com.spring.restapi.board.service.BoardService;
 import com.spring.restapi.core.exception.NotFoundDataException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
-    @Autowired
-    public BoardServiceImpl(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
-
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public List<BoardResponse> getList() {

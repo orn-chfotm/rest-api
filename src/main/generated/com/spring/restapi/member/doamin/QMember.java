@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -20,6 +21,8 @@ public class QMember extends EntityPathBase<Member> {
     public static final QMember member = new QMember("member1");
 
     public final com.spring.restapi.core.entity.QBaseEntity _super = new com.spring.restapi.core.entity.QBaseEntity(this);
+
+    public final ListPath<com.spring.restapi.board.domain.Board, com.spring.restapi.board.domain.QBoard> boards = this.<com.spring.restapi.board.domain.Board, com.spring.restapi.board.domain.QBoard>createList("boards", com.spring.restapi.board.domain.Board.class, com.spring.restapi.board.domain.QBoard.class, PathInits.DIRECT2);
 
     public final StringPath email = createString("email");
 

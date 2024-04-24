@@ -1,16 +1,19 @@
 package com.spring.restapi.member.doamin;
 
+import com.spring.restapi.board.domain.Board;
 import com.spring.restapi.core.entity.BaseEntity;
 import com.spring.restapi.core.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"boards"})
 public class Member extends BaseEntity {
 
     @Id
@@ -37,6 +40,9 @@ public class Member extends BaseEntity {
     @Column
     @Comment("권한")
     private String role;
+
+    @OneToMany(mappedBy = "regByMember")
+    private List<Board> boards;
 
     @Builder
     public Member(Long id, String email, String password, String name, String gender, String role) {

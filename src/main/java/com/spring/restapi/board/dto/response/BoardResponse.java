@@ -6,13 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
 public class BoardResponse extends BaseRegModResponse {
 
     private Long id;
@@ -21,6 +17,9 @@ public class BoardResponse extends BaseRegModResponse {
 
     private String content;
 
+    private String regByName;
+
+    @Builder
     public BoardResponse(Board board) {
         super(board.getRegBy(), board.getRegDt(), board.getModBy(), board.getModDt());
         this.id = board.getId();

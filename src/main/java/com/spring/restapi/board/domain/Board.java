@@ -1,17 +1,16 @@
 package com.spring.restapi.board.domain;
 
 import com.spring.restapi.core.entity.BaseEntity;
+import com.spring.restapi.member.doamin.Member;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 @Entity(name = "BOARD")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString(exclude = {"regByMember"})
 public class Board extends BaseEntity {
 
     @Id
@@ -27,6 +26,10 @@ public class Board extends BaseEntity {
     @Column
     @Comment("내용")
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "regBy", referencedColumnName = "member_id", insertable = false, updatable = false)
+    private Member regByMember;
 
     @Builder
     public Board(Long id, String title, String content) {

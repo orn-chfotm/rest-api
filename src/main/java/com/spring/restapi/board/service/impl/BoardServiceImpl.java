@@ -1,6 +1,7 @@
 package com.spring.restapi.board.service.impl;
 
 
+import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.restapi.board.domain.Board;
 import com.spring.restapi.board.dto.request.BoardRequest;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.spring.restapi.board.domain.QBoard.board;
+import static com.spring.restapi.member.doamin.QMember.member;
 
 
 @Slf4j
@@ -39,10 +43,22 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardResponse getBoard(Long id) {
-        Board board = boardRepository.findById(id)
+        Board boardresult = boardRepository.findById(id)
                 .orElseThrow(() -> new NotFoundDataException("Board not found"));
 
-        return new BoardResponse(board);
+        System.out.println("id :: " + id);
+
+        Board fetch = queryFactory.selectFrom(board)
+                .where(board.id.eq(id))
+                .join(board.regByMember, member)
+                .fetchOne();
+
+        assert fetch != null;
+
+        BoardResponse boardResponse = new BoardResponse(boardresult);
+        boardResponse.setRegByName(fetch.getRegByMember().getName());
+
+        return boardResponse;
     }
 
     @Override
